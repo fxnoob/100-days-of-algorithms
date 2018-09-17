@@ -14,6 +14,7 @@ Sort *Sort_init(int size,int size_of){
 
 //destroy Sort obj
 void Sort_destruct(Sort *sort){
+	free(sort->nums);
 	free(sort);
 }
 

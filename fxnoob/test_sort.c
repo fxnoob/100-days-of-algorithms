@@ -5,10 +5,10 @@
 
 
 int order_asc(int a, int b){
-	return (a > b);
+	return (a < b);
 }
 int order_desc(int a, int b){
-	return (a < b);
+	return (a > b);
 }
 
 int main(int argc, char const *argv[]){
@@ -26,5 +26,7 @@ int main(int argc, char const *argv[]){
 	for (int i = 0; i < SIZE; i++){
 		printf("%f  ",num[i]);
 	}
+	//free memory
+    Sort_destruct(sort);
 	return 0;
 }
