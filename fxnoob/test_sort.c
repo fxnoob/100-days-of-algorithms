@@ -5,15 +5,14 @@
 
 
 int order_asc(int a, int b){
-	return (a < b);
-}
-int order_desc(int a, int b){
 	return (a > b);
 }
 
-int main(int argc, char const *argv[]){
-	
-	Sort *sort = Sort_init(SIZE,sizeof(float));
+int order_desc(int a, int b){
+	return (a < b);
+}
+
+void fill_array(Sort *sort){
 	float *num;
 	num = (float *)sort->nums;
 	for (int i = 0; i < SIZE; i++){
@@ -21,12 +20,23 @@ int main(int argc, char const *argv[]){
 		printf("%d  ",(int )num[i]);
 		//mem_cpy();
 	}
-	sort->bubble(sort->nums,sort->size,order_asc);
-	printf("\n");
+}
+void show_array(void *num){
+	float *n ;
+	n = (float *)num;
 	for (int i = 0; i < SIZE; i++){
-		printf("%f  ",num[i]);
+		printf("%f  ",n[i]);
 	}
+}
+int main(int argc, char const *argv[]){
+	
+	Sort *sort = Sort_init(SIZE,sizeof(float));
+	fill_array(sort);
+	sort->selection(sort->nums,sort->size,order_asc);
+	printf("\nSorted Array in ascending order: \n");
+	show_array(sort->nums);
+	printf("\n");
 	//free memory
-    Sort_destruct(sort);
+	Sort_destruct(sort);
 	return 0;
 }

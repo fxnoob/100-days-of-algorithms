@@ -9,11 +9,11 @@ include_directories(
 	)
 
 ADD_LIBRARY( Sort STATIC
-             sort.c )
+	sort.c )
 set( APP_SORT test_sort )
 
 ADD_EXECUTABLE( ${APP_SORT}
-                test_sort.c )
+	test_sort.c )
 
 TARGET_LINK_LIBRARIES( ${APP_SORT}
-                       Sort )
+	Sort )
