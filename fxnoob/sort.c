@@ -71,10 +71,10 @@ void sort_insertion(void *ptr, int size , int (*compare)(int , int)){
 	float *num,key;
 	int j;
 	num = (float *)ptr;
-	for (int i = 2; i < size; i++){
+	for (int i = 1; i < size; i++){
 		key = num[i];
 		j = i-1;
-		while(compare(num[j],num[j+1])&&j){
+		while(compare(num[j], key)&&j>=0){
 			num[j+1] = num[j];
 			j--;
 		}
