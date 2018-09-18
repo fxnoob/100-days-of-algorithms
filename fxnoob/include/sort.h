@@ -5,7 +5,7 @@ typedef struct SortInternalStructure{
 	int size;
 	void *nums;
 	//bubble sort
-	sort_param_3 bubble,selection;
+	sort_param_3 bubble,selection,insertion;
 }Sort;
 
 Sort *Sort_init( int , int );

@@ -5,10 +5,10 @@
 void sort_bubble(void *,int, int (*compare)( int , int ));
 //selection sorts
 void sort_selection(void *ptr, int size , int (*compare)(int , int));
-
 //helper functions
 int sort_max_min_fromIndex(void *array , int index,int (*compare)(int , int)); 
-
+//insertion sort
+void sort_insertion(void *ptr, int size , int (*compare)(int , int));
 //create sort obj
 Sort *Sort_init(int size,int size_of){
 	Sort *sort = (Sort *)malloc(sizeof(Sort));
@@ -16,6 +16,7 @@ Sort *Sort_init(int size,int size_of){
 	sort->nums = malloc(size*sizeof(size_of));
 	sort->bubble = sort_bubble;
 	sort->selection = sort_selection;
+	sort->insertion = sort_insertion;
 	return sort;
 }
 
@@ -63,5 +64,20 @@ void sort_selection(void *ptr, int size , int (*compare)(int , int)){
 		temp = nums[in];
 		nums[in] = nums[i];
 		nums[i] = temp;			
+	}
+}
+//insertion sort
+void sort_insertion(void *ptr, int size , int (*compare)(int , int)){
+	float *num,key;
+	int j;
+	num = (float *)ptr;
+	for (int i = 2; i < size; i++){
+		key = num[i];
+		j = i-1;
+		while(compare(num[j],num[j+1])&&j){
+			num[j+1] = num[j];
+			j--;
+		}
+		num[j+1] = key;
 	}
 }
