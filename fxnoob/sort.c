@@ -9,6 +9,10 @@ void sort_selection(void *ptr, int size , int (*compare)(int , int));
 int sort_max_min_fromIndex(void *array , int index,int (*compare)(int , int)); 
 //insertion sort
 void sort_insertion(void *ptr, int size , int (*compare)(int , int));
+//merge-sort helper
+void sort_merge_combine(void *, int , int, int, int (*compare)(int , int));
+//merge-sort
+void sort_mergesort(void *ptr, int l, int r, int (*compare)(int , int));
 //create sort obj
 Sort *Sort_init(int size,int size_of){
 	Sort *sort = (Sort *)malloc(sizeof(Sort));
@@ -17,6 +21,7 @@ Sort *Sort_init(int size,int size_of){
 	sort->bubble = sort_bubble;
 	sort->selection = sort_selection;
 	sort->insertion = sort_insertion;
+    sort->mergesort = sort_mergesort;
 	return sort;
 }
 
@@ -80,4 +85,51 @@ void sort_insertion(void *ptr, int size , int (*compare)(int , int)){
 		}
 		num[j+1] = key;
 	}
+}
+//merge-sort helper
+void sort_merge_combine(void *array,int l, int m, int r, int (*compare)(int , int)){
+	float *arr = (float *)array;
+	int i,j,k,n1 = m-l+1;
+	int n2 = r-m;
+	float arr1[n1],arr2[n2];
+	for (i = 0; i < n1; i++){
+		arr1[i] = arr[l+i];
+	}
+	for (j = 0; j < n2; j++){
+		arr2[j] = arr[m+1+j];
+	}
+	i=0;j=0;k=l;
+	while(i<n1 && j<n2){
+		if (compare(arr2[j],arr1[i])){
+			arr[k] = arr1[i];
+			i++;
+		}	
+		else{
+			arr[k] = arr2[j];
+			j++;
+		}
+		k++;
+	}
+	while (i < n1) 
+    { 
+        arr[k] = arr1[i]; 
+        i++; 
+        k++; 
+    } 
+    while (j < n2) 
+    { 
+        arr[k] = arr2[j]; 
+        j++; 
+        k++; 
+    } 
+}
+//merge-sort(divide and conquer)
+void sort_mergesort(void *ptr, int l, int r, int (*compare)(int , int)){
+    int m;
+    if(l<r){
+    	m = (l+r)/2;
+	    sort_mergesort(ptr,l,m,compare);
+	    sort_mergesort(ptr,m+1,r,compare);
+	    sort_merge_combine(ptr,l,m,r,compare);
+    }
 }

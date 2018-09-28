@@ -32,7 +32,7 @@ int main(int argc, char const *argv[]){
 	
 	Sort *sort = Sort_init(SIZE,sizeof(float));
 	fill_array(sort);
-	sort->insertion(sort->nums,sort->size,order_asc);
+	sort->mergesort(sort->nums,0,sort->size-1,order_asc);
 	printf("\nSorted Array in ascending order: \n");
 	show_array(sort->nums);
 	printf("\n");
