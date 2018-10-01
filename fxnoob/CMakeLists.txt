@@ -16,4 +16,4 @@ ADD_EXECUTABLE( ${APP_SORT}
 	test_sort.c )
 
 TARGET_LINK_LIBRARIES( ${APP_SORT}
-	Sort )
+	Sort m)

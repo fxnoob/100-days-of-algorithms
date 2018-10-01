@@ -1,6 +1,6 @@
 #include <sort.h>
 #include <stdlib.h>
-
+#include <math.h> 
 //bubble sort
 void sort_bubble(void *,int, int (*compare)( int , int ));
 //selection sorts
@@ -13,6 +13,8 @@ void sort_insertion(void *ptr, int size , int (*compare)(int , int));
 void sort_merge_combine(void *, int , int, int, int (*compare)(int , int));
 //merge-sort
 void sort_mergesort(void *ptr, int l, int r, int (*compare)(int , int));
+//heap-sort
+void sort_heapsort(void *array,int size,int (*compare)(int , int));
 //create sort obj
 Sort *Sort_init(int size,int size_of){
 	Sort *sort = (Sort *)malloc(sizeof(Sort));
@@ -22,6 +24,7 @@ Sort *Sort_init(int size,int size_of){
 	sort->selection = sort_selection;
 	sort->insertion = sort_insertion;
     sort->mergesort = sort_mergesort;
+    sort->heapsort = sort_heapsort;
 	return sort;
 }
 
@@ -132,4 +135,39 @@ void sort_mergesort(void *ptr, int l, int r, int (*compare)(int , int)){
 	    sort_mergesort(ptr,m+1,r,compare);
 	    sort_merge_combine(ptr,l,m,r,compare);
     }
+}
+//heap-sort helper
+void swapvals(void *a,void *b){
+	float k;
+	k = *(float *)a;
+	*(float *)a = *(float *)b;
+	*(float *)b =  k;
+}
+int sort_heapsort_heapify(void *array,int size,int index,int (*compare)(int , int)){
+	float *arr = (float *)array;
+	int left = 2*index+1;
+	int right = 2*index+2;
+	int largest = index;
+	if ( left<size && compare(arr[left],arr[index])){
+		largest = left;
+	}
+	if ( right<size && compare(arr[right],arr[index])){
+		largest = right;
+	}
+	if (largest!=index){
+		swapvals(&arr[index],&arr[largest]);
+		sort_heapsort_heapify(array,size,largest,compare);
+	}
+	return largest;
+}
+//heapsort
+void sort_heapsort(void *array,int size,int (*compare)(int , int)){
+	for (int i = log2(size)-1; i >= 0; i--){
+		sort_heapsort_heapify(array,size,i,compare);
+	}
+	float *arr = (float *)array;
+	for (int i = size-1; i >= 0; i--){
+		swapvals(&arr[0],&arr[i]);
+		sort_heapsort_heapify(array,i,0,compare);	
+	}
 }
